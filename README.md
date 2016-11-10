@@ -1,1 +1,8 @@
-The code in this repository requires the `th-new` branch of GHC. Instructions for building this branch are available on the [GHC wiki](http://hackage.haskell.org/trac/ghc/wiki/TemplateHaskell/Typed#Compilingtheth-newbranch). Be sure to follow the instructions for building a static GHCi, as that is required for runtime compilation using the GHC API due to [bug #7774](http://hackage.haskell.org/trac/ghc/ticket/7774). You will also need to install the [`ghc-paths` package](http://hackage.haskell.org/package/ghc-paths-0.1.0.9) by hand.
+# th-new
+
+A demo of staged computation with typed Template Haskell as per
+[Type-Safe Runtime Code Generation with (Typed) Template Haskell]
+(http://gmainland.blogspot.com/2013/05/type-safe-runtime-code-generation-with.html).
+
+The code in this repository is known to work with GHC 7.10.3 and 8.0.1. The only
+extra dependency is the  [`ghc-paths` package](http://hackage.haskell.org/package/ghc-paths).
