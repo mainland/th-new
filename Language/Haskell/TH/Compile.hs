@@ -9,7 +9,7 @@ import Data.Typeable       (Typeable,
                             typeOf)
 import Language.Haskell.TH (TExp,
                             unType,
-                            pprint)
+                            pprint, Dec(ValD), Pat(VarP), mkName, Body(NormalB))
 import System.Directory    (removeFile)
 import System.FilePath     (addExtension,
                             splitExtension)
@@ -19,7 +19,7 @@ import System.IO           (hClose,
                             openTempFile)
 import Unsafe.Coerce       (unsafeCoerce)
 
-import GHC
+import GHC hiding (ValD)
 import GHC.Paths (libdir)
 import DynFlags  (defaultFatalMessager,
                   defaultFlushOut)
@@ -45,12 +45,13 @@ compile texp =
     open :: TExp a -> IO FilePath
     open e = do
         (tfile, h) <- openTempFile "." "TempMod.hs"
-        hPutStr h (unlines
-                   [ "module TempMod where"
-                   , "import GHC.Num"
-                   , ""
-                   , "myFunc :: " ++ show (typeOf (undefined :: a))
-                   , "myFunc = " ++ pprint (unType e)] )
+        hPutStr h $ unlines
+           [ "module TempMod where"
+           , "import GHC.Num"
+           , ""
+           , "myFunc :: " ++ show (typeOf (undefined :: a))
+           , pprint $ ValD (VarP (mkName "myFunc")) (NormalB (unType e)) []
+           ]
         hFlush h
         hClose h
         return tfile

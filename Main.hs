@@ -6,11 +6,9 @@ module Main where
 import Language.Haskell.TH
 import Language.Haskell.TH.Compile
 
-type TExpQ a = Q (TExp a)
-
 main :: IO ()
 main = do
-  powTExp :: (TExp (Double -> Double)) <- runQ (mkPow 23)
+  powTExp :: (TExp (Double -> Double)) <- runQ (mkPow' 23)
   putStrLn . pprint . unType $ powTExp
   pow <- compile powTExp
   print $ pow 2.0
