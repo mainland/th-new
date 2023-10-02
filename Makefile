@@ -1,4 +1,9 @@
-GHC=ghc
+
+ifeq ($(wildcard cabal.sandbox.config),)
+    GHC=ghc
+else
+    GHC=cabal exec -- ghc
+endif
 
 GHCFLAGS=-fforce-recomp \
 	-dcore-lint \
